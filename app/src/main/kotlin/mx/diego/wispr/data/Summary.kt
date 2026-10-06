@@ -34,6 +34,7 @@ data class Glance(
     val currency: String,
     val monthExpense: Long,
     val monthIncome: Long,
+    /** Lo gastado en los mismos días del mes anterior (1 al día de hoy), para comparar parejo. */
     val previousExpense: Long,
     val budgets: List<Budget>,
     val fetchedAt: LocalDateTime,
@@ -46,11 +47,16 @@ data class Glance(
             val cash: CashflowResponse = service.cashflow(
                 WisprDate.string(WisprDate.startOfMonth(today)), WisprDate.string(today),
             )
+            // El "previous" de get_cashflow es el periodo de igual duración justo antes (los
+            // últimos días del mes pasado), no los mismos días del mes pasado: se pide aparte.
+            val lastMonth = WisprDate.startOfMonth(today).minusMonths(1)
+            val sameDay = lastMonth.plusDays((today.dayOfMonth - 1).toLong()).coerceAtMost(WisprDate.endOfMonth(lastMonth))
+            val previous = service.cashflow(WisprDate.string(lastMonth), WisprDate.string(sameDay))
             return Glance(
                 currency = budgets.currency,
                 monthExpense = cash.summary.current.expense,
                 monthIncome = cash.summary.current.income,
-                previousExpense = cash.summary.previous.expense,
+                previousExpense = previous.summary.current.expense,
                 budgets = budgets.budgets.byUrgency(),
                 fetchedAt = LocalDateTime.now(),
             )

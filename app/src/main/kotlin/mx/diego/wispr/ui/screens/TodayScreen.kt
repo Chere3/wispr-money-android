@@ -81,7 +81,7 @@ fun TodayContent(snapshot: TodaySnapshot, at: LocalTime, onSeeMovements: () -> U
                 },
             ) {
                 Delta(g.monthExpense, g.previousExpense, higherIsBetter = false,
-                    against = Fmt.month(month.minusMonths(1), withYear = false).lowercase())
+                    against = "el mismo día de ${Fmt.month(month.minusMonths(1), withYear = false).lowercase()}")
             }
         }
         item { BudgetsCard(g, onOpen = { open = it }) }
