@@ -1,0 +1,12 @@
+.gradle/
+build/
+local.properties
+*.local.*
+.idea/
+*.iml
+.DS_Store
+captures/
+.kotlin/
+
+# Skills de Claude Code de terceros: se instalan localmente (ver CLAUDE.md)
+.claude/

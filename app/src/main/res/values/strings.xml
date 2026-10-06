@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wispr</string>
+    <string name="widget_name">Wispr</string>
+    <string name="widget_description">Gasto del mes, presupuestos, flujo y movimientos, en vivo. Cuanto más grande, más muestra.</string>
+</resources>
